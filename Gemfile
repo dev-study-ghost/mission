@@ -33,6 +33,10 @@ gem 'devise', '~> 3.0.3'
 
 gem "rails_admin", "~> 0.5.0"
 
+group :development do
+  gem "pry-rails"
+end
+
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
   gem 'sdoc', require: false
