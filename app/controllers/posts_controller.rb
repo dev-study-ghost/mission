@@ -2,6 +2,25 @@ class PostsController < ApplicationController
   before_action :set_post, only: [:show, :edit, :update, :destroy]
   before_filter :authenticate_user!, except: [:index, :show]
 
+  def like
+    if @post = Post.find(params[:id])
+      if (@like = LikePost.where(user_id: current_user.id, post_id: @post.id).first).blank?
+        @like = LikePost.new(user_id: current_user.id, post_id: @post.id)
+
+        if @like.save
+          redirect_to @post
+        else
+          redirect_to @post
+        end
+      else
+        @like.destroy
+        redirect_to @post
+      end
+    else
+      redirect_to posts_url
+    end
+  end
+
   # GET /posts
   # GET /posts.json
   def index

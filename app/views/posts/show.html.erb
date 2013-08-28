@@ -9,7 +9,14 @@
 </p>
 <p>작성자: <%= @post.user.email %></p>
 <p>
-  좋아요:
+  <% if user_signed_in? and @post.liked_users.where(id: current_user.id).first %>
+    <%= link_to '좋아요취소', post_like_path, method: 'post' %>:
+  <% else %>
+    <%= link_to '좋아요', post_like_path, method: 'post' %>:
+  <% end %>
+  <% @post.liked_users.each do |u| %>
+    <%= u.email %>,
+  <% end %>
 </p>
 <%= link_to 'Edit', edit_post_path(@post) %> |
 <%= link_to 'Back', posts_path %>
