@@ -9,12 +9,12 @@
 </p>
 <p>작성자: <%= @post.user.email %></p>
 <p>
-  <% if user_signed_in? and @post.liked_users.where(id: current_user.id).first %>
+  <% if user_signed_in? and @post.liked_users.where(id: current_user.id).first %><!-- and로 묶어서 두가지 조건을 통과해야 하는데 첫번째는 로그인을 했는지(user_signed_in?), 두번짼 해당 포스트에 현재 유저가 좋아요가 되어있는지? -->
     <%= link_to '좋아요취소', post_like_path, method: 'post' %>:
   <% else %>
     <%= link_to '좋아요', post_like_path, method: 'post' %>:
   <% end %>
-  <% @post.liked_users.each do |u| %>
+  <% @post.liked_users.each do |u| %><!-- 좋아요 한 Users 출력 -->
     <%= u.email %>,
   <% end %>
 </p>

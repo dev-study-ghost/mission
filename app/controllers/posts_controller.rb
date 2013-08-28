@@ -2,10 +2,11 @@ class PostsController < ApplicationController
   before_action :set_post, only: [:show, :edit, :update, :destroy]
   before_filter :authenticate_user!, except: [:index, :show]
 
+  #POST /posts/:id/like
   def like
-    if @post = Post.find(params[:id])
-      if (@like = LikePost.where(user_id: current_user.id, post_id: @post.id).first).blank?
-        @like = LikePost.new(user_id: current_user.id, post_id: @post.id)
+    if @post = Post.find(params[:id]) # 1. 먼저 Post모델을 가져옵니다.
+      if (@like = LikePost.where(user_id: current_user.id, post_id: @post.id).first).blank? # 2. 그다음 지금 해당 request를 보낸 User이 좋아요가 되어있는지 검색.
+        @like = LikePost.new(user_id: current_user.id, post_id: @post.id) # 이 행으로 진입했다는건 현재 User이 현재 Post를 좋아요 한적이 없기때문에 LikePost에 객체를 생성하므로써 좋아요! 추가
 
         if @like.save
           redirect_to @post
@@ -13,7 +14,7 @@ class PostsController < ApplicationController
           redirect_to @post
         end
       else
-        @like.destroy
+        @like.destroy # 2번에서 여기에 진입했다면 이미 좋아요가 되어있는 상태로 좋아요가 되어있는 상태에서 또 요청한거라면 사용자는 '좋아요취소'를 클릭한것이므로 destroy해줘서 LikePost에서 제거해줍니다.
         redirect_to @post
       end
     else
