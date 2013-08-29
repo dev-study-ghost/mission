@@ -1,0 +1,6 @@
+{
+    "name": "lain-document",
+    "dependencies": {
+        "bootstrap": "~3"
+    }
+}
