@@ -1,16 +1,16 @@
-<ul style="list-style-type: none">
+<div id="container" class="js-masonry" data-masonry-options='{ "columnWidth": 350, "itemSelector": ".item" }'>
     <% @posts.each do |post| %>
 
-  <li>
+  <div class="item" style="width: 300px; border: 1px solid;">
     <h1><%= post.title %></h1>
         <div><%= post.contents %></div>
         <div><%= link_to 'Show', post %>
         <%= link_to 'Edit', edit_post_path(post) %>
           <%= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' } %></div>
       </tr>
-  </li>
+  </div>
     <% end %>
-</ul>
+</div>
 <br>
 
 <%= link_to 'New Post', new_post_path %>
